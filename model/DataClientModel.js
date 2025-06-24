@@ -9,13 +9,16 @@ const DataClient = db.define('DataClient', {
   file: { type: DataTypes.BLOB('long'), allowNull: false }, // Ubah ke BLOB
   createdBy: { type: DataTypes.STRING }, // Tambahan
   updatedBy: { type: DataTypes.STRING }, // Tambahan
+  kategori: { type: DataTypes.STRING, allowNull: false },
+  layanan: { type: DataTypes.STRING, allowNull: false },
 }, {
   freezeTableName: true
 });
 
-
+ 
 export default DataClient;
 
 (async () => {
   await db.sync();
 })();
+ 

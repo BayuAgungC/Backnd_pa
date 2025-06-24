@@ -32,21 +32,23 @@ export const getClientsById = async (req, res) => {
 // Get client by NIK
 export const getClientByNIK = async (req, res) => {
   try {
-    const client = await Client.findOne({
+    const clients = await Client.findAll({
       where: {
         nik: req.params.nik,
       },
     });
-    if (client) {
-      res.status(200).json(client);
+
+    if (clients.length > 0) {
+      res.status(200).json(clients);  // Kirimkan array data clients
     } else {
       res.status(404).json({ message: 'Client not found' });
     }
   } catch (error) {
-    console.error(error.message);
+    console.error("Error retrieving clients: ", error.message); 
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Create a new client
 export const createClient = async (req, res) => {
