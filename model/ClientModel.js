@@ -17,20 +17,7 @@ const Client = db.define(
     status: { type: DataTypes.STRING, allowNull: false },
     alamat: { type: DataTypes.STRING, allowNull: true },
     deskripsi: { type: DataTypes.STRING, allowNull: true },
-    tarif: { type: DataTypes.FLOAT, allowNull: false }, // Tambahkan tarif
-    terbayar: { type: DataTypes.FLOAT, defaultValue: 0 }, // Tambahkan total pembayaran yang sudah dilakukan
-    kekurangan: { 
-      type: DataTypes.VIRTUAL,
-      get() {
-        return this.tarif - this.terbayar;
-      }
-    },
-    keterangan: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        return this.kekurangan > 0 ? "Belum Lunas" : "Lunas";
-      }
-    },
+
   },
   {
     freezeTableName: true,

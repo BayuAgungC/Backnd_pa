@@ -5,7 +5,8 @@ import {
   createLembarKerja,
   getLembarKerja,
   updateLembarKerja,
-  deleteLembarKerja
+  deleteLembarKerja,
+  getLembarKerjaHistori,
 } from '../controller/LembarKerjaController.js';
 //import { authenticateToken } from '../middleware/authMiddleware.js';
 
@@ -20,5 +21,6 @@ router.get('/LembarKerja',  /*authenticateToken*/ getLembarKerja);
 router.post('/LembarKerja',  /*authenticateToken*/ upload.single('file'), createLembarKerja);
 router.patch('/LembarKerja/:id',  /*authenticateToken*/ upload.single('file'), updateLembarKerja);
 router.delete('/LembarKerja/:id',  /*authenticateToken*/ deleteLembarKerja);
+router.get('/LembarKerja/:id/histori', getLembarKerjaHistori);
 
 export default router;
