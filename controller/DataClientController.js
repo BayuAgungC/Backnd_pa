@@ -21,7 +21,7 @@ export const getDataClients = async (req, res) => {
 
 
 export const createDataClient = async (req, res) => {
-  const { nama, kepemilikan, createdBy, kategori, layanan} = req.body;
+  const { nama, kepemilikan, createdBy, kategori, layanan, status} = req.body;
   const file = req.file;
   
   if (!file) return res.status(400).json({ message: 'File is required' });
@@ -34,6 +34,7 @@ export const createDataClient = async (req, res) => {
       layanan,
       file: file.buffer,
       createdBy,
+      status,
     });
     res.status(201).json(newDataClient);
   } catch (error) {
@@ -43,7 +44,7 @@ export const createDataClient = async (req, res) => {
 
 export const updateDataClient = async (req, res) => {
   const { id } = req.params;
-  const { nama, kepemilikan, updatedBy,kategori, layanan } = req.body;
+  const { nama, kepemilikan, updatedBy,kategori, layanan, status } = req.body;
   let fileData = null;
 
   try {
@@ -58,6 +59,7 @@ export const updateDataClient = async (req, res) => {
       kategori,
       layanan,
       file: fileData,
+      status,
       updatedBy: updatedBy || 'unknown'
     });
 

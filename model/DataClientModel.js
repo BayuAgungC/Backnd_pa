@@ -11,6 +11,8 @@ const DataClient = db.define('DataClient', {
   updatedBy: { type: DataTypes.STRING }, // Tambahan
   kategori: { type: DataTypes.STRING, allowNull: false },
   layanan: { type: DataTypes.STRING, allowNull: false },
+  status: { type: DataTypes.STRING, allowNull: false },
+}, {
 }, {
   freezeTableName: true
 });
