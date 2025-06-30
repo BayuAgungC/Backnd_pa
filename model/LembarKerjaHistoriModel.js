@@ -22,6 +22,10 @@ const LembarKerjaHistori = db.define('LembarKerjaHistori', {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  kepemilikan: {
+    type: DataTypes.STRING,
+    allowNull: false, // Menambahkan kolom kepemilikan di histori
+  },
 }, {
   freezeTableName: true,
 });

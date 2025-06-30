@@ -45,6 +45,7 @@ export const createLembarKerja = async (req, res) => {
       lembarKerjaId: newLembarKerja.id,
       status: status, // Status yang baru dibuat (misalnya "draft")
       tanggalStatus: new Date(), // Tanggal saat dibuat
+      kepemilikan: kepemilikan, // Menyimpan kepemilikan pada histori
     });
 
     res.status(201).json(newLembarKerja);
@@ -72,6 +73,7 @@ export const updateLembarKerja = async (req, res) => {
         lembarKerjaId: id,
         status: status,  // Status baru yang diterima
         tanggalStatus: new Date(), // Tanggal perubahan
+        kepemilikan: kepemilikan, // Menyimpan kepemilikan pada histori
       });
     }
 
@@ -135,5 +137,46 @@ export const getLembarKerjaHistori = async (req, res) => {
 };
 
 
+export const getLembarKerjaHistoriByKepemilikan = async (req, res) => {
+  const { kepemilikan } = req.params; // Ambil kepemilikan dari parameter URL
 
+  try {
+    const histori = await LembarKerjaHistori.findAll({
+      where: { kepemilikan: kepemilikan }, // Filter berdasarkan kepemilikan
+      order: [['tanggalStatus', 'ASC']], // Urutkan berdasarkan tanggal
+    });
+
+    if (!histori || histori.length === 0) {
+      return res.status(404).json({ message: 'Histori tidak ditemukan untuk kepemilikan ini' });
+    }
+
+    res.status(200).json(histori); // Kembalikan histori yang ditemukan
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal mendapatkan histori berdasarkan kepemilikan', error: error.message });
+  }
+};
+
+
+// Mendapatkan status LembarKerja berdasarkan Kepemilikan
+export const getStatusByKepemilikan = async (req, res) => {
+  const { kepemilikan } = req.params; // Ambil kepemilikan dari parameter URL
+
+  try {
+    // Menemukan semua data LembarKerja berdasarkan kepemilikan
+    const lembarKerjas = await LembarKerja.findAll({
+      where: { kepemilikan: kepemilikan }, // Filter berdasarkan kepemilikan
+      attributes: ['status'], // Hanya ambil kolom status
+    });
+
+    if (!lembarKerjas || lembarKerjas.length === 0) {
+      return res.status(404).json({ message: 'Tidak ada data lembar kerja untuk kepemilikan ini' });
+    }
+
+    // Mengembalikan status untuk semua lembar kerja yang ditemukan
+    const statuses = lembarKerjas.map(lembarKerja => lembarKerja.status);
+    res.status(200).json(statuses); // Kembalikan status
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal mendapatkan status LembarKerja', error: error.message });
+  }
+};
 
